@@ -90,7 +90,7 @@ def is_validated_english_sentence(user_input):
         if s in user_input:
             return False
     for i in ['.','!','?',' ']:
-        user_input.replace(i,'')
+        user_input = user_input.replace(i,'')
     if len(user_input) == 0:
         return False
     return True
@@ -319,13 +319,13 @@ def encoding_sentence(english_sentence):
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당 또는 필요에 따라 자유로운 수정
     morse_code = get_morse_code_dict()
     
-    sentence = english_sentence.upper().split(' ')
+    sentence = english_sentence.upper().split()
     result = ''
     for sent in sentence:
         for s in sent:
             result+=morse_code[s]
             result+=' '
-        result+=' '
+        result+= ' '
     result = result[:-1]
 
     return result
