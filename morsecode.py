@@ -168,6 +168,8 @@ def get_cleaned_english_sentence(raw_english_sentence):
     
     for i in ['.',',','!','?']:
         raw_english_sentence = raw_english_sentence.replace(i,'')
+    
+
 
     while True:
         if raw_english_sentence[0] != ' ' and raw_english_sentence[-1] != ' ':
@@ -177,8 +179,14 @@ def get_cleaned_english_sentence(raw_english_sentence):
             raw_english_sentence.pop(0)
         if raw_english_sentence[-1] == ' ':
             raw_english_sentence.pop()
-
-    return raw_english_sentence
+    now = 0
+    result = ''  
+    for i in raw_english_sentence:
+        if now ==' ' and i ==' ':
+            continue
+        now = i
+        result+=i
+    return result
     # ==================================
 
 
@@ -208,7 +216,7 @@ def decoding_character(morse_character):
     result = []
 
     morse_code_dict = get_morse_code_dict()
-    morse_to_alp = dict([(value,key) for key,value in morse_code_dict])
+    morse_to_alp = dict([(value,key) for key,value in morse_code_dict.items()])
 
     morse_character = morse_character.split(' ')
     for morse in morse_character:
@@ -336,14 +344,16 @@ def main():
         elif is_help_command(user_input):
             print(get_help_message())
             continue
-        elif is_validated_english_sentence(user_input):
-            user_input = get_cleaned_english_sentence(user_input).upper()
 
-            print(encoding_sentence(user_input))
-            continue
         elif is_validated_morse_code(user_input):
             print(decoding_sentence(user_input))
             continue
+        
+        elif is_validated_english_sentence(user_input):
+            user_input = get_cleaned_english_sentence(user_input).upper()
+            print(encoding_sentence(user_input))
+            continue
+        
         print('Wrong Input')
 
         
