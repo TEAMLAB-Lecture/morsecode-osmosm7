@@ -84,13 +84,11 @@ def is_validated_english_sentence(user_input):
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당 또는 필요에 따라 자유로운 수정
     # 1 숫자가 포함되어 잇거나
-    for s in user_input:
-        try:
-            int(s)
+    for s in ['_','@','#','$','%','^','&','*','(',')','-',
+            '+','=','[',']','{','}','"',"'",';',':',"\\",
+            '|','`','~','0','1','2','3','4','5','6','7','8','9']:
+        if s in user_input:
             return False
-        except:
-            if s in ['_','@','#','$','%','^','&','*','(',')','-','+','=','[',']','{','}','"',"'",';',':',"\\",'|','`','~']:
-                return False
     for i in ['.','!','?',' ']:
         user_input.replace(i,'')
     if len(user_input) == 0:
@@ -210,7 +208,7 @@ def decoding_character(morse_character):
     result = []
 
     morse_code_dict = get_morse_code_dict()
-    morse_to_alp = {value:key for key,value in morse_code_dict}
+    morse_to_alp = dict([(value,key) for key,value in morse_code_dict])
 
     morse_character = morse_character.split(' ')
     for morse in morse_character:
@@ -249,7 +247,7 @@ def encoding_character(english_character):
     morse_code_dict = get_morse_code_dict()
     engs = english_character.split(' ')
     for eng in engs:
-        result.append(mores_code_dict[eng])
+        result.append(morse_code_dict[eng])
     result = ' '.join(result)
 
     return result
@@ -313,7 +311,7 @@ def encoding_sentence(english_sentence):
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당 또는 필요에 따라 자유로운 수정
     morse_code = get_morse_code_dict()
     
-    sentence = english_sentence.split(' ')
+    sentence = english_sentence.upper().split(' ')
     result = ''
     for sent in sentence:
         for s in sent:
